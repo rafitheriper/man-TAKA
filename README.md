@@ -267,8 +267,6 @@ Before coding, I want to collect the following:
 - **Technology:** HTML, CSS, and JavaScript.
 - **Files:**
   - `index.html` — website structure and text.
-  - `style.css` — colours, layout, animations, responsive design.
-  - `script.js` — buttons, scene transitions, interactive cards, gift reveal, replay.
   - `assets/` — optional images, illustrations, and other media.
 - **Hosting:** GitHub for the project repository and Vercel for deployment.
 
