@@ -262,10 +262,12 @@ const TITLES = {
   'you': 'You'
 };
 
+const VER = '3';
+
 const clip = (id, caption, opts = {}) => ({
   key: id,
   title: TITLES[id],
-  body: () => `<div class="media${opts.portrait ? ' portrait' : ''}"><video src="assets/clips/${id}.mp4" poster="assets/clips/${id}-poster.jpg" muted loop playsinline preload="none"></video></div>${caption ? `<p class="caption">${caption}</p>` : ''}`
+  body: () => `<div class="media${opts.portrait ? ' portrait' : ''}"><video src="assets/clips/${id}.mp4?v=${VER}" poster="assets/clips/${id}-poster.jpg?v=${VER}" muted loop playsinline preload="none"></video></div>${caption ? `<p class="caption">${caption}</p>` : ''}`
 });
 
 const GIFTS = [
@@ -375,6 +377,10 @@ function openGift(section, g, instant){
   body.querySelectorAll('video').forEach(v => {
     v.muted = true;
     v.play().catch(() => {});
+    v.addEventListener('click', () => {
+      if (v.paused) v.play().catch(() => {});
+      else v.pause();
+    });
   });
 
   if (!instant){
