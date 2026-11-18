@@ -202,6 +202,25 @@ footer button.link:hover{color:var(--ink);border-color:var(--line)}
 #sigil:hover svg .spk{fill:var(--gold)}
 #sigil:hover svg .x{stroke:var(--gold)}
 
+/* JUMPSCARE */
+#scare{position:fixed;inset:0;z-index:120;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,rgba(255,111,156,.28),rgba(232,69,122,.12) 55%,rgba(42,12,47,.4))}
+#scare.hit{animation:scareflash .55s ease-out}
+@keyframes scareflash{0%{opacity:0}8%{opacity:1}100%{opacity:0}}
+body.shake{animation:shake .5s linear}
+@keyframes shake{
+  0%,100%{transform:translate(0,0)}
+  10%{transform:translate(-9px,4px)}
+  20%{transform:translate(8px,-5px)}
+  30%{transform:translate(-7px,-4px)}
+  40%{transform:translate(7px,5px)}
+  50%{transform:translate(-6px,3px)}
+  60%{transform:translate(6px,-3px)}
+  70%{transform:translate(-5px,-2px)}
+  80%{transform:translate(4px,2px)}
+  90%{transform:translate(-3px,-1px)}
+}
+#voicePlay.boo{border-color:var(--rose);background:rgba(232,69,122,.3)}
+
 /* SECRET VOICE GIFT */
 #secret{max-width:680px;margin:0 auto;padding:0 clamp(18px,4vw,26px) clamp(50px,8vh,80px);text-align:center}
 #secret[hidden]{display:none}
@@ -246,6 +265,7 @@ footer button.link:hover{color:var(--ink);border-color:var(--line)}
   </div>
 </div>
 <div id="progress" aria-hidden="true"><div class="dots" id="pdots"></div><span class="count" id="pcount"></span></div>
+<div id="scare" aria-hidden="true"></div>
 <div id="finale" aria-hidden="true"><p>that's all of them.<br>happy birthday, Mantaka. 🎂</p></div>
 <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
@@ -641,6 +661,7 @@ voiceBtn.addEventListener('click', () => {
     } else {
       voiceAudio.volume = 1;
       voiceAudio.playbackRate = 1;
+      if (voicePlays === 2) jumpscare();
     }
     voiceAudio.play().then(() => {
       voiceBtn.classList.add('playing');
@@ -652,9 +673,24 @@ voiceBtn.addEventListener('click', () => {
     voiceAudio.pause();
   }
 });
+
+function jumpscare(){
+  voiceBtn.classList.add('boo');
+  if (!reduced){
+    const flash = $('scare');
+    flash.classList.remove('hit');
+    void flash.offsetWidth; /* restart animation */
+    flash.classList.add('hit');
+    document.body.classList.remove('shake');
+    void document.body.offsetWidth;
+    document.body.classList.add('shake');
+    setTimeout(() => document.body.classList.remove('shake'), 550);
+    embers(70);
+  }
+}
 function voiceCaption(){
   if (voicePlays === 1) return 'huh… maybe try again?';
-  if (voicePlays === 2) return 'there we go.';
+  if (voicePlays === 2) return 'BOO. happy birthday 😇';
   return 'sound familiar?';
 }
 voiceAudio.addEventListener('pause', () => {
