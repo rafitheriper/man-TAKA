@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a0810">
+<meta name="theme-color" content="#2a0c2f">
 <meta name="color-scheme" content="dark">
 <title>Mantaka — 19</title>
 <meta name="description" content="A small thing, made for Mantaka's nineteenth.">
@@ -22,20 +22,17 @@
 <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-/* =====================================================
-   TOKENS
-   ===================================================== */
 :root{
-  --bg:#0a0810;
-  --bg-2:#121019;
-  --paper:#100d16;
-  --ink:#ece3d2;
-  --muted:#a49b8c;
-  --line:rgba(236,227,210,.14);
-  --line-soft:rgba(236,227,210,.08);
-  --blood:#8c1d2f;
-  --rose:#cf6f80;
-  --gold:#c9a227;
+  --ink:#fbeedd;
+  --muted:#dcc3da;
+  --plum:#2a0c2f;
+  --wine:#7a1638;
+  --emerald:#0f5a52;
+  --rose:#ff7aa6;
+  --pink:#e8457a;
+  --gold:#e9b949;
+  --paper:#fbe6ea;
+  --line:rgba(233,185,73,.36);
   --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
   --black:'UnifrakturCook',Georgia,serif;
   --sans:'Inter',system-ui,-apple-system,sans-serif;
@@ -43,157 +40,84 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  background:var(--bg);
+  background-color:#2a0c2f;
+  background-image:
+    radial-gradient(60vmax 50vmax at 10% 6%,rgba(160,26,72,.6),transparent 70%),
+    radial-gradient(55vmax 48vmax at 94% 32%,rgba(14,110,100,.55),transparent 70%),
+    radial-gradient(70vmax 60vmax at 50% 104%,rgba(110,30,150,.65),transparent 70%),
+    radial-gradient(40vmax 40vmax at 40% 60%,rgba(233,185,73,.08),transparent 70%);
+  background-attachment:fixed;
   color:var(--ink);
   font:400 18px/1.7 var(--serif);
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  min-height:100vh;
 }
 img,svg,canvas,video{display:block;max-width:100%}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+[hidden]{display:none!important}
 
-/* =====================================================
-   ATMOSPHERE
-   ===================================================== */
-.atmos{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden}
-.mist{position:absolute;inset:-25%;filter:blur(90px);opacity:.45}
-.mist i{position:absolute;width:62vmax;height:62vmax;border-radius:50%}
-.mist i:nth-child(1){background:radial-gradient(circle,#2a0f1a,transparent 70%);left:-8vmax;top:-10vmax;animation:drift1 38s ease-in-out infinite alternate}
-.mist i:nth-child(2){background:radial-gradient(circle,#1a1422,transparent 70%);right:-14vmax;bottom:-16vmax;animation:drift2 46s ease-in-out infinite alternate}
-@keyframes drift1{to{transform:translate(12vmax,10vmax) scale(1.15)}}
-@keyframes drift2{to{transform:translate(-10vmax,-8vmax) scale(.92)}}
-.vignette{position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 38%,transparent 32%,rgba(3,2,5,.72) 100%)}
-.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
-.frame{position:fixed;inset:16px;z-index:1;pointer-events:none;border:1px solid var(--line-soft)}
+.frame{position:fixed;inset:14px;z-index:1;pointer-events:none;border:1px solid var(--line)}
+.frame::after{content:"";position:absolute;inset:5px;border:1px solid rgba(233,185,73,.14)}
 #embers{position:fixed;inset:0;z-index:90;pointer-events:none}
 
-/* =====================================================
-   TYPE & SHARED PARTS
-   ===================================================== */
-.eyebrow{font:500 11px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
-.label{font:500 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.shead{display:flex;align-items:center;gap:16px;margin-bottom:clamp(28px,5vw,44px)}
-.shead .rule{flex:1;height:1px;background:var(--line-soft)}
-.shead .label{display:flex;gap:10px;align-items:baseline}
-.shead .label b{font:400 1.05rem/1 var(--serif);color:var(--rose);letter-spacing:.04em}
-h2{font:500 clamp(1.7rem,4.2vw,2.5rem)/1.15 var(--serif);letter-spacing:.01em;margin-bottom:10px}
-.lede{color:var(--muted);font-size:1.02rem;max-width:46ch;margin-bottom:clamp(24px,4vw,38px)}
-.section{position:relative;max-width:1040px;margin:0 auto;padding:clamp(76px,12vh,132px) clamp(20px,5vw,40px)}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease-out,transform .8s ease-out}
-.reveal.in{opacity:1;transform:none}
+/* HERO */
+.hero{min-height:82vh;min-height:82svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 40px}
+.eyebrow{font:500 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:clamp(22px,4vh,34px)}
+.hero h1{font:400 clamp(3.6rem,17vw,8.5rem)/.95 var(--black);background:linear-gradient(95deg,#ff8fb4 0%,#f7d36b 45%,#ff6f9c 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 28px rgba(255,111,156,.25))}
+.hero .sub{margin-top:clamp(20px,3vh,28px);font:italic 400 clamp(1.05rem,2.4vw,1.3rem)/1.6 var(--serif);color:var(--muted);max-width:34ch}
+.hero .status{margin-top:14px;font:500 10.5px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--rose)}
 
-/* =====================================================
-   HERO
-   ===================================================== */
-.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;padding:80px 24px 96px}
-.hero .eyebrow{margin-bottom:clamp(24px,4vh,38px)}
-.hero h1{
-  font:400 clamp(3.4rem,17vw,8rem)/.95 var(--black);
-  color:var(--ink);letter-spacing:.01em;
-  text-shadow:0 0 70px rgba(201,162,39,.14);
-}
-.hero .sub{margin-top:clamp(22px,3vh,30px);font:italic 400 clamp(1.05rem,2.4vw,1.32rem)/1.6 var(--serif);
-  color:var(--muted);max-width:34ch}
-.hero .status{margin-top:14px;font:500 10.5px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-.cue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px}
-.cue span{font:500 9.5px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.cue .line{width:1px;height:52px;background:linear-gradient(var(--line),transparent)}
-.cue .line::after{content:"";display:block;width:3px;height:3px;margin-left:-1px;border-radius:50%;background:var(--gold);animation:drop 2.6s ease-in infinite}
-@keyframes drop{0%{transform:translateY(0);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(48px);opacity:0}}
+/* STAGE */
+#stage{max-width:640px;margin:0 auto;padding:12px clamp(18px,4vw,28px) 0;min-height:520px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.reveal{width:100%;display:flex;flex-direction:column;align-items:center;animation:rise .7s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.num{font:500 11px/1 var(--sans);letter-spacing:.3em;color:var(--gold)}
+.gtitle{font:500 clamp(1.7rem,4.2vw,2.4rem)/1.2 var(--serif);color:var(--ink);margin:14px 0 24px}
 
-/* =====================================================
-   PHOTOGRAPHS
-   ===================================================== */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(8px,1.6vw,14px)}
-.frameBtn{position:relative;padding:6px;background:#0d0a12;border:1px solid var(--line);
-  transition:border-color .35s,transform .35s;cursor:zoom-in;border-radius:1px}
-.frameBtn img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:saturate(.9) brightness(.94);
-  transition:filter .5s,transform .5s}
-.frameBtn:hover,.frameBtn:focus-visible{border-color:rgba(201,162,39,.45);transform:translateY(-3px)}
-.frameBtn:hover img{filter:saturate(1) brightness(1.02)}
-.frameBtn .no{position:absolute;left:11px;bottom:9px;font:500 9.5px/1 var(--sans);letter-spacing:.18em;
-  color:rgba(236,227,210,.85);background:rgba(6,5,9,.6);padding:4px 6px;backdrop-filter:blur(4px)}
+.giftbox{width:min(250px,68vw);aspect-ratio:1;display:block;margin:0 auto;padding:0;filter:drop-shadow(0 18px 28px rgba(20,0,20,.55));transition:transform .45s ease}
+.giftbox:hover{transform:translateY(-4px) rotate(-1.5deg)}
+.giftbox:focus-visible{outline:2px solid var(--gold);outline-offset:8px;border-radius:4px}
+.giftbox svg{width:100%;height:100%;overflow:visible}
+.gb-lid,.gb-bow{transition:transform .65s cubic-bezier(.2,.7,.3,1),opacity .6s ease;transform-box:fill-box;transform-origin:center}
+.giftbox.opening{transform:scale(1.05)}
+.giftbox.opening .gb-lid{transform:translateY(-38px) rotate(-10deg)}
+.giftbox.opening .gb-bow{transform:translateY(-70px) scale(1.25);opacity:0}
+.hint{margin-top:20px;font:500 10px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--rose)}
 
-/* =====================================================
-   LIGHTBOX
-   ===================================================== */
-dialog#lb{width:100vw;max-width:100vw;height:100%;max-height:100%;margin:0;padding:0;border:0;
-  background:rgba(5,4,8,.94);backdrop-filter:blur(14px);color:var(--ink)}
-dialog#lb::backdrop{background:rgba(4,3,6,.6)}
-#lb .wrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:clamp(16px,4vh,44px) clamp(12px,4vw,40px)}
-#lb img{max-height:78vh;max-width:min(92vw,760px);object-fit:contain;border:1px solid var(--line-soft)}
-#lb .bar{display:flex;align-items:center;gap:18px;font:500 10px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-#lb .bar button{padding:12px;color:var(--muted);border:1px solid transparent;transition:color .3s,border-color .3s}
-#lb .bar button:hover{color:var(--ink);border-color:var(--line)}
-#lb .close{position:absolute;top:12px;right:14px;padding:14px;color:var(--muted);font-size:22px;line-height:1}
-#lb .close:hover{color:var(--ink)}
-#lb .count{min-width:9ch;text-align:center}
+.gbody{width:100%;text-align:left}
+.lede{color:var(--muted);text-align:center;font-size:1.04rem;margin-bottom:18px}
 
-/* =====================================================
-   SIX SMALL THINGS
-   ===================================================== */
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(12px,2.4vw,22px)}
-.card{position:relative}
-.stage{position:relative;aspect-ratio:4/3;overflow:hidden;background:#0d0a12;border:1px solid var(--line);transition:border-color .4s}
-.poster{width:100%;height:100%;object-fit:cover;filter:brightness(.9) saturate(.9);transition:transform .7s,filter .5s}
-.clip{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}
-.card:hover .stage{border-color:rgba(201,162,39,.4)}
-.card:hover .poster{transform:scale(1.04);filter:brightness(.96) saturate(1)}
-.num{position:absolute;left:12px;top:10px;font:italic 400 1.1rem/1 var(--serif);color:rgba(236,227,210,.8);
-  text-shadow:0 1px 8px rgba(0,0,0,.7);z-index:2}
-.hit{position:absolute;inset:0;z-index:3;border:0;cursor:pointer;background:transparent}
-.card:focus-within .stage{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
-.card.open .poster{opacity:0}
-.card.open .clip{opacity:1}
-.card figcaption{padding-top:12px}
-.card h3{font:500 1.12rem/1.3 var(--serif);letter-spacing:.01em}
-.card .cap{font:italic 400 .95rem/1.5 var(--serif);color:var(--muted);opacity:0;transform:translateY(6px);
-  transition:opacity .5s .15s,transform .5s .15s;max-width:34ch}
-.card.open .cap{opacity:1;transform:none}
+/* PHOTOS SHEET */
+.sheet{position:relative;background:linear-gradient(160deg,#fff1f4,#f6d3df);padding:26px 22px 30px;box-shadow:0 22px 44px rgba(20,0,20,.5);border-top:6px solid var(--gold)}
+.sheet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sheet figure{background:#fff;padding:6px 6px 12px;box-shadow:0 4px 12px rgba(80,10,40,.25)}
+.sheet figure:nth-child(odd){transform:rotate(-1.2deg)}
+.sheet figure:nth-child(even){transform:rotate(1deg)}
+.sheet img{width:100%;aspect-ratio:1;object-fit:cover;background:#f3dbe3}
+@media (max-width:460px){.sheet-grid{grid-template-columns:repeat(2,1fr)}}
 
-/* =====================================================
-   CORRESPONDENCE
-   ===================================================== */
-.letterSec{display:flex;flex-direction:column;align-items:center}
-.epigraph{font:italic 400 1.05rem/1.7 var(--serif);color:var(--muted);margin-bottom:clamp(30px,5vw,46px);text-align:center}
-.envWrap{perspective:1200px;margin-bottom:clamp(28px,4vw,40px);transition:opacity .5s,transform .5s}
-.envelope{position:relative;width:min(360px,82vw);aspect-ratio:1.72/1;background:linear-gradient(155deg,#17121e,#100d16);
-  border:1px solid rgba(236,227,210,.16);box-shadow:0 26px 60px rgba(0,0,0,.55);transition:transform .4s}
-.envelope:hover{transform:translateY(-3px)}
-.envelope .flap{position:absolute;inset:0 0 auto;height:64%;background:linear-gradient(180deg,#1c1624,#141019);
-  clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .8s cubic-bezier(.2,.8,.2,1);
-  border-bottom:1px solid rgba(236,227,210,.06)}
-.envelope.open .flap{transform:rotateX(178deg)}
-.seal{position:absolute;left:50%;top:56%;width:56px;height:56px;transform:translate(-50%,-50%);border-radius:50%;
-  background:radial-gradient(circle at 34% 28%,#a52a3f,#6d1524 60%,#4a0e18);
-  box-shadow:0 4px 14px rgba(0,0,0,.6),inset 0 1px 2px rgba(255,220,200,.25),0 0 22px rgba(140,29,47,.35);
-  display:grid;place-items:center;font:400 1.55rem/1 var(--black);color:#e8c9a0;
-  transition:transform .45s,opacity .45s}
-.seal::after{content:"";position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(232,201,160,.25)}
-.envelope.open .seal{transform:translate(-50%,-50%) scale(.7);opacity:0}
-.envelope .hint{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);
-  font:500 9.5px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-.letter{width:100%;max-width:600px;background:
-  linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0)),var(--paper);
-  border:1px solid var(--line);padding:clamp(28px,5vw,44px) clamp(22px,5vw,42px);
-  box-shadow:0 30px 80px rgba(0,0,0,.5);opacity:0;transform:translateY(16px);pointer-events:none;
-  transition:opacity .8s .15s,transform .8s .15s;position:relative}
-.letter.show{opacity:1;transform:none;pointer-events:auto}
-.letter .stamp{position:absolute;top:18px;right:22px;font:500 9px/1 var(--sans);letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted)}
-.letter p{font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.85;margin-bottom:1.15em;color:#ded5c4}
-.letter .open{font:500 .9rem/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--blood);margin-bottom:1.6em}
-.letter .sig{font:italic 400 1.3rem/1 var(--serif);color:var(--gold);margin-top:1.6em;letter-spacing:.02em}
+/* CLIPS */
+.media{width:100%;aspect-ratio:1;border:2px solid var(--gold);outline:1px solid rgba(233,185,73,.3);outline-offset:5px;overflow:hidden;background:var(--plum)}
+.media video{width:100%;height:100%;object-fit:cover}
+.caption{margin-top:18px;text-align:center;font:italic 400 1.05rem/1.5 var(--serif);color:var(--muted)}
 
-/* =====================================================
-   CAKE
-   ===================================================== */
-.cakeSec{text-align:center}
-.candleWrap{display:flex;flex-direction:column;align-items:center;margin-top:6px}
-.candle{width:clamp(112px,20vw,150px);padding:10px;filter:drop-shadow(0 16px 26px rgba(0,0,0,.55))}
+/* MANIFEST */
+.wish{width:100%;min-height:150px;resize:vertical;padding:18px 20px;background:rgba(42,12,47,.7);border:1px solid var(--line);color:var(--ink);font:400 1.15rem/1.6 var(--serif)}
+.wish::placeholder{color:#b89bb8}
+.wish:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,185,73,.15)}
+.note{margin-top:12px;text-align:center;font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--rose)}
+
+/* LETTER */
+.letter{width:100%;background:linear-gradient(170deg,#fff0f2,#f5d6df);color:#3a1530;padding:34px 30px;box-shadow:0 22px 44px rgba(20,0,20,.45);border:1px solid rgba(233,185,73,.5)}
+.letter .open{font:600 .9rem/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--wine);margin-bottom:1.4em}
+.letter p{font-size:clamp(1.02rem,2.2vw,1.14rem);line-height:1.85;margin-bottom:1.1em;color:#3a1530}
+.letter .sig{font:italic 500 1.3rem/1 var(--serif);color:var(--wine);margin-top:1.4em}
+
+/* CAKE */
+.cake{display:flex;flex-direction:column;align-items:center;width:100%}
+.candleWrap{display:flex;flex-direction:column;align-items:center}
+.candle{width:clamp(120px,22vw,160px);padding:10px;filter:drop-shadow(0 16px 26px rgba(20,0,20,.55))}
 .candle .flame{transform-origin:60px 52px;animation:flicker 2.4s ease-in-out infinite}
 .candle .halo{animation:pulse 3.4s ease-in-out infinite}
 @keyframes flicker{
@@ -210,51 +134,44 @@ dialog#lb::backdrop{background:rgba(4,3,6,.6)}
   0%{opacity:.5;transform:translateY(0) scale(.9)}
   100%{opacity:0;transform:translateY(-46px) scale(1.15)}
 }
-.cakeNote{margin-top:22px;font:italic 400 clamp(1.02rem,2.4vw,1.22rem)/1.7 var(--serif);color:var(--muted);
-  opacity:0;transform:translateY(8px);transition:opacity .8s .4s,transform .8s .4s;max-width:34ch}
-.candleWrap.done .cakeNote{opacity:1;transform:none}
+.cakeNote{margin-top:18px;font:italic 400 clamp(1.02rem,2.4vw,1.22rem)/1.7 var(--serif);color:var(--muted);opacity:0;transition:opacity .8s .4s}
+.candleWrap.done .cakeNote{opacity:1}
 
-/* =====================================================
-   CLOSING
-   ===================================================== */
-.closing{text-align:center;max-width:820px;margin:0 auto;padding:clamp(90px,16vh,170px) 24px clamp(60px,10vh,90px)}
-.closing h2{font:400 clamp(2rem,7vw,4rem)/1.1 var(--black);color:var(--ink);text-shadow:0 0 60px rgba(201,162,39,.12);margin-bottom:22px}
-.closing .line{width:min(220px,42vw);height:1px;margin:0 auto 22px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+/* BUTTONS */
+.btn{padding:14px 26px;border:1px solid var(--gold);background:linear-gradient(90deg,#8a1a46,#c2355f);color:#fff7e6;font:500 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;transition:filter .3s,transform .3s}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.nav{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.done{font:italic 400 1.05rem/1.5 var(--serif);color:var(--muted)}
+
+/* TABS */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:44px auto 0;max-width:640px;padding:0 20px}
+.tab{width:40px;height:40px;border:1px solid var(--line);color:var(--muted);font:500 11px/1 var(--sans);letter-spacing:.06em;transition:background .3s,color .3s,border-color .3s}
+.tab:hover:not(:disabled){border-color:var(--gold);color:var(--ink)}
+.tab.on{background:var(--gold);border-color:var(--gold);color:var(--plum)}
+.tab:disabled{opacity:.28;cursor:default}
+
+/* CLOSING */
+.closing{text-align:center;max-width:820px;margin:0 auto;padding:clamp(70px,12vh,110px) 24px clamp(40px,6vh,60px)}
+.closing h2{font:400 clamp(2rem,7vw,4rem)/1.1 var(--black);background:linear-gradient(95deg,#ff8fb4,#f7d36b,#ff6f9c);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:22px}
+.closing .line{width:min(220px,42vw);height:1px;margin:0 auto 22px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .closing p{color:var(--muted);font:italic 400 clamp(1rem,2.2vw,1.15rem)/1.7 var(--serif)}
-.closing .last{margin-top:26px;font:500 10px/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:rgba(164,155,140,.6)}
-footer{max-width:1040px;margin:0 auto;padding:0 24px 64px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid var(--line-soft);padding-top:26px}
-footer .mark{font:400 1.1rem/1 var(--black);color:rgba(236,227,210,.55);letter-spacing:.04em}
+.closing .last{margin-top:26px;font:500 10px/1 var(--sans);letter-spacing:.26em;text-transform:uppercase;color:var(--rose)}
+footer{max-width:780px;margin:0 auto;padding:26px 24px 64px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid var(--line)}
+footer .mark{font:400 1.1rem/1 var(--black);color:var(--gold);letter-spacing:.04em}
 footer .tools{display:flex;align-items:center;gap:18px}
-footer button{font:500 10px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
-  padding:10px 2px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
-footer button:hover{color:var(--ink);border-color:var(--line)}
+footer button.link{font:500 10px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:10px 2px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+footer button.link:hover{color:var(--ink);border-color:var(--line)}
 #sigil{padding:12px;display:grid;place-items:center}
 #sigil svg{width:17px;height:17px;transition:transform .4s}
-#sigil svg .spk{fill:rgba(164,155,140,.55);transition:fill .4s}
-#sigil svg .x{fill:none;stroke:rgba(164,155,140,.55);stroke-width:1.9;stroke-linecap:round;transition:stroke .4s}
+#sigil svg .spk{fill:var(--muted);transition:fill .4s}
+#sigil svg .x{fill:none;stroke:var(--muted);stroke-width:1.9;stroke-linecap:round;transition:stroke .4s}
 #sigil:hover svg{transform:rotate(-4deg)}
 #sigil:hover svg .spk{fill:var(--gold)}
 #sigil:hover svg .x{stroke:var(--gold)}
 
-/* =====================================================
-   TOAST
-   ===================================================== */
-.toast{position:fixed;left:50%;bottom:44px;transform:translate(-50%,16px);max-width:min(88vw,420px);
-  padding:14px 20px;border:1px solid rgba(201,162,39,.4);background:rgba(14,11,19,.94);
-  backdrop-filter:blur(10px);color:var(--ink);font:italic 400 1rem/1.5 var(--serif);text-align:center;
-  box-shadow:0 18px 50px rgba(0,0,0,.6),0 0 30px rgba(201,162,39,.08);opacity:0;pointer-events:none;
-  transition:opacity .4s,transform .4s;z-index:200}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
 :focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 
-/* =====================================================
-   RESPONSIVE + MOTION
-   ===================================================== */
-@media (min-width:700px){
-  .grid{grid-template-columns:repeat(3,1fr)}
-  .cards{grid-template-columns:repeat(3,1fr)}
-}
 @media (max-width:719px){
   .frame{display:none}
   .hero{padding-top:64px}
@@ -264,122 +181,37 @@ footer button:hover{color:var(--ink);border-color:var(--line)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .reveal{opacity:1;transform:none}
-  .letter{opacity:1;transform:none}
-  .card .cap{opacity:1;transform:none}
 }
 </style>
 </head>
 
 <body>
-<div class="atmos" aria-hidden="true"><div class="mist"><i></i><i></i></div></div>
-<div class="vignette" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
 <div class="frame" aria-hidden="true"></div>
 <canvas id="embers" aria-hidden="true"></canvas>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<!-- ============ HERO ============ -->
 <header class="hero">
-  <p class="eyebrow">19 · XI · MMXXVI</p>
+  <p class="eyebrow">19 November 2026</p>
   <h1>Mantaka</h1>
   <p class="sub">I made you a small thing. Take your time with it.</p>
   <p class="status" id="status">—</p>
-  <div class="cue" aria-hidden="true"><span>scroll</span><div class="line"></div></div>
 </header>
 
-<!-- ============ I · PHOTOGRAPHS ============ -->
 <main>
-<section class="section reveal" id="photographs">
-  <div class="shead"><span class="label"><b>I</b> Photographs</span><span class="rule"></span></div>
-  <h2>Some frames I kept.</h2>
-  <p class="lede">Tap one to look closer.</p>
-  <div class="grid" id="gallery"></div>
-</section>
+  <div id="stage" aria-live="polite"></div>
+  <nav class="tabs" id="tabs" aria-label="Gifts"></nav>
+</main>
 
-<!-- ============ II · SIX SMALL THINGS ============ -->
-<section class="section reveal" id="small-things">
-  <div class="shead"><span class="label"><b>II</b> Six small things</span><span class="rule"></span></div>
-  <h2>Six things, out of context.</h2>
-  <p class="lede">Tap a card. Each one is a small answer.</p>
-  <div class="cards" id="cards"></div>
-</section>
-
-<!-- ============ III · CORRESPONDENCE ============ -->
-<section class="section reveal letterSec" id="letter">
-  <div class="shead" style="width:100%"><span class="label"><b>III</b> Correspondence</span><span class="rule"></span></div>
-  <p class="epigraph">Accha, dekhi ki bal banaiso.</p>
-
-  <div class="envWrap" id="envWrap">
-    <button class="envelope" id="envelope" aria-expanded="false" aria-controls="letterCard" aria-label="Open the letter">
-      <span class="flap" aria-hidden="true"></span>
-      <span class="seal" aria-hidden="true">M</span>
-      <span class="hint">One letter</span>
-    </button>
-  </div>
-
-  <article class="letter" id="letterCard" aria-hidden="true">
-    <div class="stamp">19 · XI · MMXXVI</div>
-    <p class="open">For Mantaka</p>
-    <p>I'm not going to write the usual paragraph, so here's the short version: I'm glad I met you. You make ordinary days easier to get through, and I don't say that about many people.</p>
-    <p>For this year — I hope the exams go your way, I hope you get to rest, and I hope the people who are good for you stay close.</p>
-    <p>Happy birthday.</p>
-    <p class="sig">— Rafi</p>
-  </article>
-</section>
-
-<!-- ============ IV · THE CAKE ============ -->
-<section class="section reveal cakeSec" id="cake">
-  <div class="shead" style="width:100%"><span class="label"><b>IV</b> The cake</span><span class="rule"></span></div>
-  <h2>One more thing.</h2>
-  <div class="candleWrap" id="candleWrap">
-    <button class="candle" id="candle" aria-label="Blow out the candle">
-      <svg viewBox="0 0 120 200" aria-hidden="true">
-        <defs>
-          <linearGradient id="wax" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#9d8d76"/>
-            <stop offset=".42" stop-color="#eaddc6"/>
-            <stop offset="1" stop-color="#8e7f6a"/>
-          </linearGradient>
-          <radialGradient id="flameg" cx="50%" cy="72%" r="60%">
-            <stop offset="0" stop-color="#fff8dc"/>
-            <stop offset=".42" stop-color="#ffcf6a"/>
-            <stop offset="1" stop-color="#d9661f"/>
-          </radialGradient>
-          <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-            <stop offset="0" stop-color="rgba(255,196,86,.5)"/>
-            <stop offset="1" stop-color="rgba(255,196,86,0)"/>
-          </radialGradient>
-        </defs>
-        <ellipse class="halo" cx="60" cy="44" rx="52" ry="52" fill="url(#halo)"/>
-        <path class="smoke" d="M60 30c9-9-4-19 3-26" stroke="rgba(210,200,185,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        <path class="flame" d="M60 12c8 12 12 21 12 30 0 11-7 16-12 22-5-6-12-11-12-22 0-9 4-18 12-30z" fill="url(#flameg)"/>
-        <ellipse cx="60" cy="44" rx="4.5" ry="9" fill="#fff9e2" opacity=".75"/>
-        <line x1="60" y1="46" x2="60" y2="60" stroke="#2b231a" stroke-width="2"/>
-        <rect x="45" y="59" width="30" height="116" rx="5" fill="url(#wax)"/>
-        <path d="M45 64c4 5 9 4 14 1" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <path d="M58 60c3 8 1 14 0 20" stroke="rgba(255,255,255,.12)" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <ellipse cx="60" cy="176" rx="38" ry="7" fill="rgba(0,0,0,.45)"/>
-      </svg>
-    </button>
-    <p class="cakeNote" id="cakeNote">Everything you're hoping for. I mean it.</p>
-  </div>
-</section>
-
-<!-- ============ V · CLOSING ============ -->
 <section class="closing">
   <h2>Happy birthday,<br>Mantaka.</h2>
   <div class="line"></div>
-  <p id="ageLine">Nineteen on the nineteenth.</p>
+  <p>You are not average. You never were.</p>
   <p class="last">Try to enjoy it.</p>
 </section>
-</main>
 
 <footer>
-  <span class="mark">R. — MMXXVI</span>
+  <span class="mark">Rafi</span>
   <div class="tools">
-    <button id="again">Open it again</button>
+    <button class="link" id="again">Start over</button>
     <button id="sigil" aria-label="A small secret">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path class="spk" d="M3 9.2h3.8L12.5 5v14L6.8 14.8H3z"/>
@@ -389,202 +221,249 @@ footer button:hover{color:var(--ink);border-color:var(--line)}
   </div>
 </footer>
 
-<!-- LIGHTBOX -->
-<dialog id="lb" aria-label="Photograph viewer">
-  <button class="close" id="lbClose" aria-label="Close">×</button>
-  <div class="wrap">
-    <img id="lbImg" src="assets/photos/thumbs/01.jpg" alt="">
-    <div class="bar">
-      <button id="lbPrev" aria-label="Previous photograph">←</button>
-      <span class="count" id="lbCount">01 / 15</span>
-      <button id="lbNext" aria-label="Next photograph">→</button>
-    </div>
-  </div>
-</dialog>
-
 <script>
 const $ = id => document.getElementById(id);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------------- data ---------------- */
-const PHOTOS = Array.from({ length: 15 }, (_, i) => {
-  const n = String(i + 1).padStart(2, '0');
-  return { n, thumb: `assets/photos/thumbs/${n}.jpg`, full: `assets/photos/${n}.jpg`, caption: '' };
-});
-
-const CARDS = [
-  { id:'walk-in',     num:'I',   title:'You walk in',      cap:'and the room gets better.' },
-  { id:'beat-you',    num:'II',  title:'Your only rival',  cap:'Zakir Naik. Allegedly.' },
-  { id:'personality', num:'III', title:'In one word',      cap:'' },
-  { id:'study',       num:'IV',  title:'How you study',    cap:'Hard. Worryingly hard.' },
-  { id:'world',       num:'V',   title:'The world',        cap:'better, with you in it.' },
-  { id:'you',         num:'VI',  title:'You',              cap:'exactly as you are.' }
-];
-
-const KEY = 'mtk.v1';
+const KEY = 'mtk.v2';
 const store = {
   read(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } },
   save(v){ try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} }
 };
+const state = store.read();
+state.opened = state.opened || {};
+
+const BOX = `<svg viewBox="0 0 200 200" aria-hidden="true">
+  <defs>
+    <linearGradient id="gbBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff6a9c"/>
+      <stop offset="1" stop-color="#d4245f"/>
+    </linearGradient>
+    <linearGradient id="gbGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffe58a"/>
+      <stop offset=".5" stop-color="#e9b949"/>
+      <stop offset="1" stop-color="#b8861f"/>
+    </linearGradient>
+  </defs>
+  <rect x="30" y="84" width="140" height="106" rx="6" fill="url(#gbBody)"/>
+  <rect x="30" y="84" width="140" height="106" rx="6" fill="none" stroke="#7a0f36" stroke-width="2" opacity=".5"/>
+  <rect x="86" y="84" width="28" height="106" fill="url(#gbGold)"/>
+  <g class="gb-lid">
+    <rect x="22" y="56" width="156" height="32" rx="6" fill="#ff86b0"/>
+    <rect x="22" y="56" width="156" height="32" rx="6" fill="none" stroke="#7a0f36" stroke-width="2" opacity=".4"/>
+    <rect x="86" y="56" width="28" height="32" fill="url(#gbGold)"/>
+  </g>
+  <g class="gb-bow" fill="url(#gbGold)" stroke="#8a5d12" stroke-width="2" stroke-linejoin="round">
+    <path d="M100 58C76 18 40 14 50 42c5 14 30 16 50 16z"/>
+    <path d="M100 58c24-40 60-44 50-16-5 14-30 16-50 16z"/>
+    <path d="M100 58c-10 10-22 26-30 38 10 6 22-4 30-38zM100 58c10 10 22 26 30 38-10 6-22-4-30-38z"/>
+    <circle cx="100" cy="56" r="10"/>
+  </g>
+</svg>`;
+
+const PHOTO_COUNT = 15;
+const photosHTML = Array.from({ length: PHOTO_COUNT }, (_, i) => {
+  const n = String(i + 1).padStart(2, '0');
+  return `<figure><img src="assets/photos/${n}.jpg" alt="Photograph ${i + 1}" loading="lazy" decoding="async"></figure>`;
+}).join('');
+
+const TITLES = {
+  'walk-in': 'You walk in',
+  'personality': 'In one word',
+  'study': 'How you study',
+  'world': 'The world',
+  'you': 'You'
+};
+
+const clip = (id, caption) => ({
+  key: id,
+  title: TITLES[id],
+  body: () => `<div class="media"><video src="assets/clips/${id}.mp4" poster="assets/clips/${id}-poster.jpg" muted loop playsinline preload="none"></video></div>${caption ? `<p class="caption">${caption}</p>` : ''}`,
+  play: true
+});
+
+const GIFTS = [
+  {
+    key: 'photos',
+    title: 'Photographs',
+    body: () => `<p class="lede">Some frames I kept.</p><div class="sheet"><div class="sheet-grid">${photosHTML}</div></div>`
+  },
+  clip('walk-in', 'The room gets better when you walk in.'),
+  clip('personality'),
+  clip('study', 'You make hard things look easy.'),
+  clip('world', 'It is a better place with you in it.'),
+  clip('you', 'Exactly as you are.'),
+  {
+    key: 'manifest',
+    title: 'Manifest it',
+    body: () => `<p class="lede">This year, I want…</p>
+      <textarea class="wish" id="wish" maxlength="280" placeholder="Write one thing you want. Read it again on the 19th."></textarea>
+      <p class="note">Saved on this device</p>`,
+    init(root){
+      const box = root.querySelector('#wish');
+      box.value = state.wish || '';
+      box.addEventListener('input', () => {
+        state.wish = box.value;
+        store.save(state);
+      });
+    }
+  },
+  {
+    key: 'letter',
+    title: 'A note',
+    body: () => `<article class="letter">
+      <p class="open">For Mantaka</p>
+      <p>Happy birthday, Mantaka. I hope this year is kind to you. I hope you get some proper rest, and that the people around you make you laugh.</p>
+      <p class="sig">— Rafi</p>
+    </article>`
+  },
+  {
+    key: 'cake',
+    title: 'The cake',
+    body: () => `<div class="cake"><div class="candleWrap" id="candleWrap">
+      <button class="candle" id="candle" aria-label="Blow out the candle">
+        <svg viewBox="0 0 120 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="wax" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#c9a0c4"/>
+              <stop offset=".42" stop-color="#fbe6ea"/>
+              <stop offset="1" stop-color="#a07aa0"/>
+            </linearGradient>
+            <radialGradient id="flameg" cx="50%" cy="72%" r="60%">
+              <stop offset="0" stop-color="#fff8dc"/>
+              <stop offset=".42" stop-color="#ffcf6a"/>
+              <stop offset="1" stop-color="#e0306a"/>
+            </radialGradient>
+            <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="rgba(255,150,190,.5)"/>
+              <stop offset="1" stop-color="rgba(255,150,190,0)"/>
+            </radialGradient>
+          </defs>
+          <ellipse class="halo" cx="60" cy="44" rx="52" ry="52" fill="url(#halo)"/>
+          <path class="smoke" d="M60 30c9-9-4-19 3-26" stroke="rgba(230,210,230,.4)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path class="flame" d="M60 12c8 12 12 21 12 30 0 11-7 16-12 22-5-6-12-11-12-22 0-9 4-18 12-30z" fill="url(#flameg)"/>
+          <ellipse cx="60" cy="44" rx="4.5" ry="9" fill="#fff9e2" opacity=".75"/>
+          <line x1="60" y1="46" x2="60" y2="60" stroke="#2b1430" stroke-width="2"/>
+          <rect x="45" y="59" width="30" height="116" rx="5" fill="url(#wax)"/>
+          <path d="M45 64c4 5 9 4 14 1" stroke="rgba(255,255,255,.25)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M58 60c3 8 1 14 0 20" stroke="rgba(255,255,255,.18)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="60" cy="176" rx="38" ry="7" fill="rgba(0,0,0,.4)"/>
+        </svg>
+      </button>
+      <p class="cakeNote">Make a wish. I hope it comes true.</p>
+    </div></div>`,
+    init(root){
+      const candle = root.querySelector('#candle');
+      const wrap = root.querySelector('#candleWrap');
+      const blow = instant => {
+        candle.classList.add('done');
+        wrap.classList.add('done');
+        if (!instant) embers(40);
+      };
+      candle.addEventListener('click', () => {
+        if (candle.classList.contains('done')) return;
+        state.cake = true; store.save(state);
+        blow(false);
+      });
+      if (state.cake) blow(true);
+    }
+  }
+];
+
+const stage = $('stage');
+const tabs = $('tabs');
+let cur = Number.isInteger(state.cur) && state.cur >= 0 && state.cur < GIFTS.length ? state.cur : 0;
+
+const isOpened = i => !!state.opened[GIFTS[i].key];
+
+function remember(i){
+  cur = i;
+  state.cur = i;
+  store.save(state);
+}
+
+function scrollStage(){
+  stage.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+}
+
+function renderTabs(){
+  tabs.innerHTML = GIFTS.map((g, i) => {
+    const on = i === cur;
+    const open = isOpened(i) || on;
+    return `<button class="tab${on ? ' on' : ''}" data-i="${i}" aria-label="${g.title}"${open ? '' : ' disabled'} aria-current="${on ? 'step' : 'false'}">${i + 1}</button>`;
+  }).join('');
+}
+
+function renderBox(i){
+  remember(i);
+  stage.innerHTML = `<div class="reveal">
+    <p class="num">${i + 1}</p>
+    <h2 class="gtitle">${GIFTS[i].title}</h2>
+    <button class="giftbox" aria-label="Open ${GIFTS[i].title}">${BOX}</button>
+    <p class="hint">tap to open</p>
+  </div>`;
+  stage.querySelector('.giftbox').addEventListener('click', e => openBox(i, e.currentTarget));
+  renderTabs();
+}
+
+function openBox(i, btn){
+  if (btn.classList.contains('opening')) return;
+  btn.classList.add('opening');
+  if (!reduced) embers(26);
+  setTimeout(() => {
+    state.opened[GIFTS[i].key] = true;
+    store.save(state);
+    renderGift(i);
+  }, reduced ? 0 : 700);
+}
+
+function renderGift(i){
+  remember(i);
+  const g = GIFTS[i];
+  const last = i === GIFTS.length - 1;
+  stage.innerHTML = `<div class="reveal">
+    <p class="num">${i + 1}</p>
+    <h2 class="gtitle">${g.title}</h2>
+    <div class="gbody">${g.body()}</div>
+    <div class="nav">${last
+      ? '<p class="done">That was the last one.</p>'
+      : '<button class="btn" id="next">Next gift</button>'}</div>
+  </div>`;
+  if (g.init) g.init(stage);
+  stage.querySelectorAll('video').forEach(v => { if (g.play) v.play().catch(() => {}); });
+  const next = stage.querySelector('#next');
+  if (next) next.addEventListener('click', () => { renderBox(i + 1); scrollStage(); });
+  renderTabs();
+}
+
+function show(i){
+  if (isOpened(i)) renderGift(i);
+  else renderBox(i);
+}
+
+tabs.addEventListener('click', e => {
+  const t = e.target.closest('.tab');
+  if (!t || t.disabled) return;
+  const i = Number(t.dataset.i);
+  if (i === cur) return;
+  show(i);
+  scrollStage();
+});
 
 /* ---------------- status ---------------- */
 (function(){
-  const MONTH = 10, DAY = 19, BIRTH_YEAR = 2007;
+  const MONTH = 10, DAY = 19;
   const now = new Date();
   const isToday = now.getMonth() === MONTH && now.getDate() === DAY;
-
   let next = new Date(now.getFullYear(), MONTH, DAY);
   if (next < now && !isToday) next = new Date(now.getFullYear() + 1, MONTH, DAY);
   const days = Math.ceil((next - now) / 864e5);
-
-  const status = isToday ? 'today · nineteen'
-    : next > now ? (days === 1 ? 'tomorrow' : `in ${days} days`)
-    : '19 · XI · MMXXVI';
-
-  $('status').textContent = status;
-  $('ageLine').textContent = isToday ? 'Nineteen, today.'
-    : next > now ? 'Nineteen on the nineteenth.'
-    : `Nineteen, as of the nineteenth.`;
+  $('status').textContent = isToday ? 'today'
+    : days === 1 ? 'tomorrow'
+    : `in ${days} days`;
 })();
 
-/* ---------------- gallery ---------------- */
-const gallery = $('gallery');
-PHOTOS.forEach((p, i) => {
-  const b = document.createElement('button');
-  b.className = 'frameBtn';
-  b.setAttribute('aria-label', `Photograph ${p.n}`);
-  b.innerHTML = `<img src="${p.thumb}" alt="Mantaka, photograph ${i + 1}" loading="lazy" decoding="async"><span class="no">${p.n}</span>`;
-  b.addEventListener('click', () => openLB(i));
-  gallery.appendChild(b);
-});
-
-/* ---------------- lightbox ---------------- */
-const lb = $('lb'), lbImg = $('lbImg'), lbCount = $('lbCount');
-let cur = 0;
-
-function renderLB(){
-  const p = PHOTOS[cur];
-  lbImg.src = p.full;
-  lbImg.alt = `Mantaka, photograph ${cur + 1}`;
-  lbCount.textContent = `${PHOTOS[cur].n} / ${PHOTOS.length}`;
-}
-function openLB(i){
-  cur = i; renderLB();
-  if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
-}
-function step(d){
-  cur = (cur + d + PHOTOS.length) % PHOTOS.length;
-  renderLB();
-}
-$('lbPrev').onclick = () => step(-1);
-$('lbNext').onclick = () => step(1);
-$('lbClose').onclick = () => lb.close();
-lb.addEventListener('keydown', e => {
-  if (e.key === 'ArrowLeft') step(-1);
-  if (e.key === 'ArrowRight') step(1);
-});
-lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
-
-/* swipe */
-let sx = 0;
-lbImg.addEventListener('pointerdown', e => { sx = e.clientX; });
-lbImg.addEventListener('pointerup', e => {
-  const dx = e.clientX - sx;
-  if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
-});
-
-/* ---------------- cards ---------------- */
-const cardsWrap = $('cards');
-const state = store.read();
-state.cards = state.cards || {};
-
-CARDS.forEach(c => {
-  const fig = document.createElement('figure');
-  fig.className = 'card';
-  fig.innerHTML = `
-    <div class="stage">
-      <img class="poster" src="assets/clips/${c.id}-poster.jpg" alt="" loading="lazy" decoding="async">
-      <video class="clip" src="assets/clips/${c.id}.mp4" poster="assets/clips/${c.id}-poster.jpg"
-             muted loop playsinline preload="none" aria-hidden="true"></video>
-      <span class="num">${c.num}</span>
-      <button class="hit" aria-expanded="false" aria-label="Open: ${c.title}"></button>
-    </div>
-    <figcaption><h3>${c.title}</h3>${c.cap ? `<p class="cap">${c.cap}</p>` : ''}</figcaption>`;
-
-  const btn = fig.querySelector('.hit');
-  const vid = fig.querySelector('.clip');
-
-  const open = () => {
-    if (fig.classList.contains('open')){
-      if (vid.paused) vid.play(); else vid.pause();
-      return;
-    }
-    fig.classList.add('open');
-    btn.setAttribute('aria-expanded', 'true');
-    btn.setAttribute('aria-label', `Playing: ${c.title}`);
-    vid.play().catch(() => {});
-    state.cards[c.id] = true; store.save(state);
-    embers(26);
-  };
-
-  btn.addEventListener('click', open);
-
-  if (state.cards[c.id]) {
-    fig.classList.add('open');
-    btn.setAttribute('aria-expanded', 'true');
-    btn.setAttribute('aria-label', `Playing: ${c.title}`);
-    /* poster only until the card is scrolled into view, then play quietly */
-    const io = new IntersectionObserver(es => {
-      if (es[0].isIntersecting) { vid.play().catch(() => {}); io.disconnect(); }
-    }, { threshold: .4 });
-    io.observe(fig);
-  }
-  cardsWrap.appendChild(fig);
-});
-
-/* ---------------- letter ---------------- */
-const env = $('envelope'), letter = $('letterCard'), envWrap = $('envWrap');
-
-function openLetter(instant){
-  env.classList.add('open');
-  const delay = instant || reduced ? 0 : 720;
-  setTimeout(() => {
-    envWrap.style.opacity = '0';
-    envWrap.style.transform = 'translateY(-8px)';
-    if (!instant) letter.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-    setTimeout(() => {
-      letter.classList.add('show');
-      letter.setAttribute('aria-hidden', 'false');
-      envWrap.style.display = 'none';
-      embers(34);
-    }, instant ? 0 : 260);
-  }, delay);
-}
-env.addEventListener('click', () => {
-  env.setAttribute('aria-expanded', 'true');
-  state.letter = true; store.save(state);
-  openLetter(false);
-});
-if (state.letter) {
-  env.classList.add('open');
-  envWrap.style.display = 'none';
-  letter.classList.add('show');
-  letter.setAttribute('aria-hidden', 'false');
-}
-
-/* ---------------- cake ---------------- */
-const candle = $('candle'), candleWrap = $('candleWrap');
-function blow(instant){
-  candle.classList.add('done');
-  candleWrap.classList.add('done');
-  if (!instant){ embers(40); }
-}
-candle.addEventListener('click', () => {
-  if (candle.classList.contains('done')) return;
-  state.cake = true; store.save(state);
-  blow(false);
-});
-if (state.cake) blow(true);
+show(cur);
 
 /* ---------------- secret ---------------- */
 let taps = 0, tapTimer;
@@ -595,21 +474,10 @@ $('sigil').addEventListener('click', () => {
   if (taps === 5){
     taps = 0;
     embers(60);
-    toast('Secret: Mantaka has officially un-muted Rafi.');
   }
 });
 
-/* ---------------- toast ---------------- */
-let toastTimer;
-function toast(msg){
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 4200);
-}
-
-/* ---------------- replay ---------------- */
+/* ---------------- start over ---------------- */
 $('again').addEventListener('click', () => {
   try { localStorage.removeItem(KEY); } catch {}
   location.reload();
@@ -635,41 +503,28 @@ function embers(count = 30){
     r: .8 + Math.random() * 2.2,
     a: .35 + Math.random() * .5,
     sway: Math.random() * 6.28,
-    life: 0
+    c: Math.random() < .5 ? '255,122,166' : '233,185,73'
   }));
 
   emberRun = true;
   (function frame(){
     ex.clearRect(0, 0, W, H);
     ps.forEach(p => {
-      p.life++;
       p.sway += .03;
       p.x += p.vx + Math.sin(p.sway) * .4;
       p.y += p.vy;
       p.a -= .006;
       if (p.a <= 0) return;
       const g = ex.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
-      g.addColorStop(0, `rgba(255,206,120,${p.a})`);
-      g.addColorStop(.5, `rgba(201,162,39,${p.a * .35})`);
-      g.addColorStop(1, 'rgba(201,162,39,0)');
+      g.addColorStop(0, `rgba(${p.c},${p.a})`);
+      g.addColorStop(.5, `rgba(${p.c},${p.a * .35})`);
+      g.addColorStop(1, `rgba(${p.c},0)`);
       ex.fillStyle = g;
       ex.beginPath(); ex.arc(p.x, p.y, p.r * 4, 0, 6.2832); ex.fill();
     });
     if (ps.some(p => p.a > 0)) requestAnimationFrame(frame);
     else { ex.clearRect(0, 0, W, H); emberRun = false; }
   })();
-}
-
-/* ---------------- scroll reveal ---------------- */
-if (reduced || !('IntersectionObserver' in window)) {
-  document.querySelectorAll('.reveal').forEach(s => s.classList.add('in'));
-} else {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal').forEach(s => io.observe(s));
 }
 </script>
 </body>
