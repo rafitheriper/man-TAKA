@@ -202,6 +202,23 @@ footer button.link:hover{color:var(--ink);border-color:var(--line)}
 #sigil:hover svg .spk{fill:var(--gold)}
 #sigil:hover svg .x{stroke:var(--gold)}
 
+/* SECRET VOICE GIFT */
+#secret{max-width:680px;margin:0 auto;padding:0 clamp(18px,4vw,26px) clamp(50px,8vh,80px);text-align:center}
+#secret[hidden]{display:none}
+#secret .inner{animation:rise .8s ease-out both;border-top:1px solid rgba(233,185,73,.16);padding-top:clamp(40px,7vh,64px)}
+#secret .num{font:500 11px/1 var(--sans);letter-spacing:.3em;color:var(--gold)}
+#secret h2{font:500 clamp(1.5rem,3.8vw,2.1rem)/1.2 var(--serif);color:var(--ink);margin:14px 0 30px}
+#voicePlay{width:84px;height:84px;border-radius:50%;display:inline-grid;place-items:center;background:rgba(232,69,122,.14);border:1px solid rgba(233,185,73,.45);box-shadow:0 12px 34px rgba(20,0,20,.5),0 0 24px rgba(232,69,122,.12);transition:transform .35s ease,box-shadow .35s ease,background .35s ease}
+#voicePlay:hover{transform:scale(1.08);background:rgba(232,69,122,.24);box-shadow:0 14px 40px rgba(20,0,20,.55),0 0 34px rgba(232,69,122,.25)}
+#voicePlay:focus-visible{outline:2px solid var(--gold);outline-offset:6px}
+#voicePlay svg{width:30px;height:30px;fill:var(--gold);transition:opacity .2s}
+#voicePlay .icon-pause{display:none}
+#voicePlay.playing .icon-play{display:none}
+#voicePlay.playing .icon-pause{display:block}
+#voicePlay.playing{animation:voicepulse 1.8s ease-in-out infinite}
+@keyframes voicepulse{0%,100%{box-shadow:0 12px 34px rgba(20,0,20,.5),0 0 24px rgba(232,69,122,.12)}50%{box-shadow:0 12px 34px rgba(20,0,20,.5),0 0 44px rgba(232,69,122,.35)}}
+#secret .voice-note{margin-top:18px;font:italic 400 .95rem/1.5 var(--serif);color:var(--muted)}
+
 :focus-visible{outline:2px solid var(--gold);outline-offset:4px}
 
 @media (max-width:719px){
@@ -256,7 +273,6 @@ footer button.link:hover{color:var(--ink);border-color:var(--line)}
 <section class="closing">
   <h2>Happy birthday,<br>Mantaka.</h2>
   <div class="line"></div>
-  <p>You are not average. You never were.</p>
   <p class="last">Try to enjoy it.</p>
 </section>
 
@@ -272,6 +288,18 @@ footer button.link:hover{color:var(--ink);border-color:var(--line)}
     </button>
   </div>
 </footer>
+
+<section id="secret" hidden>
+  <div class="inner">
+    <p class="num">✦</p>
+    <h2>one more thing</h2>
+    <button id="voicePlay" aria-label="Play a voice note">
+      <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg>
+    </button>
+    <p class="voice-note" id="voiceNote">sound familiar?</p>
+  </div>
+</section>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -594,7 +622,66 @@ function confettiStorm(){
   })();
 }
 
-/* ---------------- secret ---------------- */
+/* ---------------- secret voice gift ---------------- */
+const voiceAudio = new Audio('assets/voice.mp3');
+voiceAudio.preload = 'auto';
+const voiceBtn = $('voicePlay');
+const voiceNote = $('voiceNote');
+let voiceUnlocked = !!state.secret;
+let voicePlays = 0; /* per visit — first play is muffled, second is the real thing */
+
+voiceBtn.addEventListener('click', () => {
+  if (voiceAudio.paused){
+    /* a "new listen" only counts when starting from the top */
+    if (voiceAudio.currentTime < 0.5) voicePlays++;
+    if (voicePlays <= 1){
+      /* quiet and a touch slow — like the file didn't come through right */
+      voiceAudio.volume = 0.25;
+      voiceAudio.playbackRate = 0.85;
+    } else {
+      voiceAudio.volume = 1;
+      voiceAudio.playbackRate = 1;
+    }
+    voiceAudio.play().then(() => {
+      voiceBtn.classList.add('playing');
+      voiceNote.textContent = 'playing…';
+    }).catch(() => {
+      voiceNote.textContent = 'this one is still being wrapped';
+    });
+  } else {
+    voiceAudio.pause();
+  }
+});
+function voiceCaption(){
+  if (voicePlays === 1) return 'huh… maybe try again?';
+  if (voicePlays === 2) return 'there we go.';
+  return 'sound familiar?';
+}
+voiceAudio.addEventListener('pause', () => {
+  voiceBtn.classList.remove('playing');
+  /* 'pause' also fires when the clip ends — the ended handler
+     runs after and sets the final caption, so order is safe */
+  voiceNote.textContent = voiceCaption();
+});
+voiceAudio.addEventListener('ended', () => {
+  voiceBtn.classList.remove('playing');
+  voiceNote.textContent = voiceCaption();
+  voiceAudio.currentTime = 0; /* so the next tap counts as a fresh listen */
+});
+
+function unlockSecret(instant){
+  if (voiceUnlocked && !instant) return;
+  voiceUnlocked = true;
+  state.secret = true; store.save(state);
+  const sec = $('secret');
+  sec.hidden = false;
+  if (!instant){
+    embers(60);
+    setTimeout(() => sec.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' }), 500);
+  }
+}
+if (voiceUnlocked) unlockSecret(true);
+
 let taps = 0, tapTimer;
 $('sigil').addEventListener('click', () => {
   taps++;
@@ -602,7 +689,7 @@ $('sigil').addEventListener('click', () => {
   tapTimer = setTimeout(() => { taps = 0; }, 1400);
   if (taps === 5){
     taps = 0;
-    embers(60);
+    unlockSecret(false);
   }
 });
 
