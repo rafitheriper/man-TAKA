@@ -253,7 +253,7 @@ const photosHTML = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 }).join('');
 
 const TITLES = {
-  'walk-in': 'You walk in',
+  'walk-in': 'When you walk in the room,',
   'personality': 'Your personality in one word',
   'study': 'The way you study',
   'beat-you': 'Only one who can beat you',
@@ -273,7 +273,7 @@ const GIFTS = [
     title: 'Photographs',
     body: () => `<p class="lede">Some frames I kept.</p><div class="sheet"><div class="sheet-grid">${photosHTML}</div></div>`
   },
-  clip('walk-in', 'When you walk in the room how everyone reacts'),
+  clip('walk-in', 'this is how everyone reacts'),
   clip('personality'),
   clip('study'),
   clip('beat-you'),
