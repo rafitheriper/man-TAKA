@@ -106,12 +106,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .media video{width:100%;height:100%;object-fit:cover}
 .caption{margin-top:18px;text-align:center;font:italic 400 1.05rem/1.5 var(--serif);color:var(--muted)}
 
-/* MANIFEST */
-.wish{width:100%;min-height:150px;resize:vertical;padding:18px 20px;background:rgba(42,12,47,.7);border:1px solid var(--line);color:var(--ink);font:400 1.15rem/1.6 var(--serif)}
-.wish::placeholder{color:#b89bb8}
-.wish:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,185,73,.15)}
-.note{margin-top:12px;text-align:center;font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--rose)}
-
 /* LETTER */
 .letter{width:100%;background:linear-gradient(170deg,#fff0f2,#f5d6df);color:#3a1530;padding:34px 30px;box-shadow:0 22px 44px rgba(20,0,20,.45);border:1px solid rgba(233,185,73,.5)}
 .letter .open{font:600 .9rem/1 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--wine);margin-bottom:1.4em}
@@ -260,9 +254,9 @@ const photosHTML = Array.from({ length: PHOTO_COUNT }, (_, i) => {
 
 const TITLES = {
   'walk-in': 'You walk in',
-  'personality': 'In one word',
-  'study': 'How you study',
-  'beat-you': 'Your only rival',
+  'personality': 'Your personality in one word',
+  'study': 'The way you study',
+  'beat-you': 'Only one who can beat you',
   'world': 'The world',
   'you': 'You'
 };
@@ -279,27 +273,12 @@ const GIFTS = [
     title: 'Photographs',
     body: () => `<p class="lede">Some frames I kept.</p><div class="sheet"><div class="sheet-grid">${photosHTML}</div></div>`
   },
-  clip('walk-in', 'The room gets better when you walk in.'),
+  clip('walk-in', 'When you walk in the room, how everyone reacts'),
   clip('personality'),
-  clip('study', 'You make hard things look easy.'),
+  clip('study'),
   clip('beat-you'),
   clip('world', 'It is a better place with you in it.'),
   clip('you', 'Exactly as you are.'),
-  {
-    key: 'manifest',
-    title: 'Manifest it',
-    body: () => `<p class="lede">This year, I want…</p>
-      <textarea class="wish" id="wish" maxlength="280" placeholder="Write one thing you want. Read it again on the 19th."></textarea>
-      <p class="note">Saved on this device</p>`,
-    init(root){
-      const box = root.querySelector('#wish');
-      box.value = state.wish || '';
-      box.addEventListener('input', () => {
-        state.wish = box.value;
-        store.save(state);
-      });
-    }
-  },
   {
     key: 'letter',
     title: 'A note',
