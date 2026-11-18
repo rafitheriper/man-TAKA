@@ -104,6 +104,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* CLIPS */
 .media{width:100%;aspect-ratio:1;border:2px solid var(--gold);outline:1px solid rgba(233,185,73,.3);outline-offset:5px;overflow:hidden;background:var(--plum)}
 .media video{width:100%;height:100%;object-fit:cover}
+.media.portrait{aspect-ratio:342/480;max-width:min(430px,88vw);margin:0 auto;outline-offset:4px}
 .caption{margin-top:18px;text-align:center;font:italic 400 1.05rem/1.5 var(--serif);color:var(--muted)}
 
 /* LETTER */
@@ -261,10 +262,10 @@ const TITLES = {
   'you': 'You'
 };
 
-const clip = (id, caption) => ({
+const clip = (id, caption, opts = {}) => ({
   key: id,
   title: TITLES[id],
-  body: () => `<div class="media"><video src="assets/clips/${id}.mp4" poster="assets/clips/${id}-poster.jpg" muted loop playsinline preload="none"></video></div>${caption ? `<p class="caption">${caption}</p>` : ''}`
+  body: () => `<div class="media${opts.portrait ? ' portrait' : ''}"><video src="assets/clips/${id}.mp4" poster="assets/clips/${id}-poster.jpg" muted loop playsinline preload="none"></video></div>${caption ? `<p class="caption">${caption}</p>` : ''}`
 });
 
 const GIFTS = [
@@ -277,7 +278,7 @@ const GIFTS = [
   clip('personality'),
   clip('study'),
   clip('beat-you'),
-  clip('world', 'It is a better place with you in it.'),
+  clip('world', 'It is a better place with you in it.', { portrait: true }),
   clip('you', 'Exactly as you are.'),
   {
     key: 'letter',
